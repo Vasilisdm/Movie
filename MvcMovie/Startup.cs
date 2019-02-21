@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MvcMovie.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MvcMovie
 {
@@ -30,6 +32,9 @@ namespace MvcMovie
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddDbContext<MvcMovieContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("MovieContext")));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
